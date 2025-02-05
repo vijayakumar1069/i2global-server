@@ -28,11 +28,18 @@ export const registerUser = async (req, res, next) => {
       }
     );
     const { password, ...rest } = savedUser._doc;
-    res.status(200).cookie("access_token", token, { httpOnly: true }).json({
-      message: "User created successfully",
-      user: rest,
-      statusCode: 200,
-    });
+    res
+      .status(200)
+      .cookie("access_token", token, {
+        httpOnly: true, // Secure, only accessible by the server
+        secure: process.env.NODE_DEV !== "development", // Use HTTPS in production
+        sameSite: "none", // Required for cross-origin cookie sharing
+      })
+      .json({
+        message: "User created successfully",
+        user: rest,
+        statusCode: 200,
+      });
   } catch (error) {
     next(error);
   }
@@ -72,7 +79,9 @@ export const loginUser = async (req, res, next) => {
     res
       .status(200)
       .cookie("access_token", token, {
-        httpOnly: true, // Prevent client-side access for better security
+        httpOnly: true, // Secure, only accessible by the server
+        secure: process.env.NODE_DEV !== "development", // Use HTTPS in production
+        sameSite: "none", // Required for cross-origin cookie sharing
       })
       .json({
         message: "User logged in successfully",

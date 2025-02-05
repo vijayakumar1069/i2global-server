@@ -15,7 +15,7 @@ const port = process.env.PORT || 4000;
 
 app.use(
   cors({
-    origin: "http://localhost:3000", // Your frontend URL
+    origin: ["http://localhost:3000", "https://i2global.vercel.app"], // Your frontend URL
     credentials: true, // Allow sending cookies with requests
   })
 );
