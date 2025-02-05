@@ -15,9 +15,8 @@ const port = process.env.PORT || 4000;
 
 app.use(
   cors({
-    origin: "*", // Your frontend URL
+    origin: "http://localhost:3000", // Your frontend URL
     credentials: true, // Allow sending cookies with requests
-    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
   })
 );
 app.use(bodyparser.json());
